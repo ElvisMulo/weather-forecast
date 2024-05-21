@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+	{% load static %}
+	{% load tz %}
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no" />
+		<title>Weather</title>
+		<link
+			rel="stylesheet"
+			href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css"
+		/>
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat+Alternates" />
+		<link
+			rel="stylesheet"
+			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+		/>
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poiret+One" />
+		<link rel="stylesheet" href="{% static 'index/css/styles.min.css' %}" />
+		<link rel="stylesheet" href="{% static 'index/css/custom.css' %}" />
+	</head>
+
+	<body style="background-color: whitesmoke">
+		<div style="background-color: #1b1919">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-12">
+						<h1
+							class="text-end d-inline-block d-lg-flex flex-shrink-1 justify-content-end justify-content-lg-end align-items-lg-end"
+							style="
+								height: 90px;
+								padding: 20px;
+								width: 100px;
+								color: rgb(222, 64, 75);
+								font-family: 'Montserrat Arial, sans-serif';
+							"
+						>
+							
+						{% comment %} <em class="fa fa-cloud" style="margin-top: -5px"></em> {% endcomment %}
+						
+						</h1>
+					</div>
+				</div>
+			</div>
+		</div>
+		<br /><br />
+		<div class="newsletter-subscribe" style="background-color: whitesmoke">
+			<div class="container">
+				<div class="row mb-5">
+					<div class="col-md-12">
+						<h1
+							class="text-center d-inline-block d-lg-flex flex-shrink-1 justify-content-center justify-content-lg-center align-items-lg-center"
+							style="
+								height: 90px;
+								padding: 20px;
+								color: rgb(222, 64, 75);
+								font-family: 'Montserrat Arial, sans-serif';
+							"
+						>
+							
+						Get Ready for the Day to Come&nbsp;<em class="fa fa-cloud" style="margin-top: -5px"></em>
+						
+						</h1>
+					</div>
+				</div>
+				<form
+					class="form-inline d-lg-flex justify-content-lg-center align-items-lg-center mt-5"
+					method="POST"
+					action="{% url 'index_page' %}"
+					style="padding: 10px"
+				>
+					{% csrf_token %}
+					<div class="form-group">{{ form.city_search }}</div>
+					<div class="form-group">
+						<button
+							class="btn border-dark"
+							type="submit"
+							style="background-color: #1b1919; color: rgb(222, 64, 75);"
+						>
+						&nbsp;search&nbsp;
+						</button>
+					</div>
+				</form>
+				{% for message in messages %}
+				<br />
+				<div
+					class="row justify-content-center align-items-center justify-content-lg-center align-items-lg-center"
+				>
+					<div class="alert alert-danger">
+						<a class="close" href="#" data-dismiss="alert">×</a>
+						{{ message }}
+					</div>
+				</div>
+				{% endfor %}
+			</div>
+		</div>
+		<div>
+			<br /><br />
+			{% if name %}
+			<div class="container">
+				<div class="row" style="margin-bottom: 100px;">
+					<div class="col-md-12 d-inline-flex d-xl-flex justify-content-xl-center align-items-xl-center">
+						<br /><br />
+						<article class="widget">
+							<div class="weatherIcon mt-3">
+								<figure class="image is-100x100">
+									<img src="https://openweathermap.org/img/wn/10d@2x.png" alt="Image" />
+									<div class="temperature"><span>{{ temperature }}&deg;C</span></div>
+								</figure>
+
+							</div>
+
+							<div class="weatherInfo">
+								<div class="description">
+									<div class="weatherCondition">{{description}}</div>
+									<div class="place">{{ name }}, {{ country }}</div>
+								</div>
+								
+							</div>
+							{% timezone "Africa/Johannesburg" %}
+							<div class="date">{{ date|date:"d b H:i a" }}</div>
+							{% endtimezone %}
+						</article>
+					</div>
+				</div>
+			</div>
+			{% endif %}
+		</div>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.bundle.min.js"></script>
+	</body>
+</html>
